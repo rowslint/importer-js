@@ -3,7 +3,7 @@
   "description": "JavaScript binding for the Rowslint importer",
   "author": "Mouad Ennaciri",
   "license": "UNLICENSED",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "files": [
     "dist/rowslint.js",
@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "build": "tsc && vite build",
-    "postbuild": "tsx scripts/postbuild.ts",
+    "postbuild": "cat dist/rowslint.umd.cjs > dist/rowslint.js && del-cli dist/rowslint.umd.cjs",
     "lint": "eslint . --ext .ts",
     "format": "prettier . --write",
     "publish": "npm publish --access=public"
@@ -20,15 +20,14 @@
     "node": "20.12.2"
   },
   "devDependencies": {
-    "@types/node": "20.12.7",
     "@typescript-eslint/eslint-plugin": "7.7.0",
     "@typescript-eslint/parser": "7.7.0",
-    "axios": "1.6.8",
+    "del-cli": "5.1.0",
     "eslint": "8.57.0",
     "prettier": "3.2.5",
     "tsx": "4.7.2",
     "typescript": "5.4.5",
-    "vite": "5.2.8",
+    "vite": "5.2.9",
     "vite-plugin-dts": "3.8.3"
   }
 }

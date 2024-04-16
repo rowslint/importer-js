@@ -1,3 +1,9 @@
+(() => {
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/@rowslint/importer@latest/browser/rowslint-element.js';
+  document.head.appendChild(script);
+})();
+
 import { RowslintTemplateConfig, RowslintConfig, RowslintImportResult } from './models';
 
 class RowslintElement extends HTMLElement {
