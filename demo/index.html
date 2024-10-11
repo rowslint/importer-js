@@ -6,10 +6,11 @@
     <title>Rowslint JavaScript demo</title>
   </head>
   <body>
-    <script src="https://cdn.jsdelivr.net/npm/@rowslint/importer-js@latest/dist/rowslint.umd.js"></script>
-    <script>
+    <script src="../dist/rowslint.js" type="module"></script>
+    <script type="module">
+      import { launchRowslint } from '../dist/rowslint.js';
       const launch = () => {
-        rowslint.launch({
+        launchRowslint({
           apiKey: '96659d46e93949238fe10fb6e84a3bae',
           config: {
             templateKey: 'd66de0394b39429aa258367b5c5be9af',
@@ -19,8 +20,9 @@
           },
         });
       };
+      document.querySelector('button').addEventListener('click', launch);
     </script>
 
-    <button onclick="launch()">Launch</button>
+    <button>Launch</button>
   </body>
 </html>

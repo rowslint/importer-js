@@ -37,6 +37,6 @@ export const launchRowslint = (configWrapper: RowslintConfig) => {
 };
 
 const destroy = () => {
-  const rowslintElement = document.querySelector('rowslint-button');
+  const rowslintElement = document.querySelector('rowslint-element');
   rowslintElement?.remove();
 };
