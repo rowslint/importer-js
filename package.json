@@ -3,7 +3,7 @@
   "description": "JavaScript binding for the Rowslint importer",
   "author": "Mouad Ennaciri",
   "license": "UNLICENSED",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "type": "module",
   "main": "./dist/rowslint.js",
   "module": "./dist/rowslint.js",
