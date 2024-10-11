@@ -1,3 +1,7 @@
+export interface Rowslint {
+  launch: (rowslintConfig: RowslintConfig) => void;
+}
+
 export interface RowslintConfig {
   apiKey: string;
   config: RowslintTemplateConfig;
