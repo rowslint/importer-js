@@ -9,7 +9,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/main.ts'),
       name: 'rowslint',
-      formats: ['umd'],
+      formats: ['es', 'umd'],
       fileName: 'rowslint',
     },
   },

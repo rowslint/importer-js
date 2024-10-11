@@ -1,0 +1,10 @@
+{
+  "name": "@rowslint/importer-js",
+  "version": "0.0.5",
+  "author": "Mouad Ennaciri",
+  "license": "UNLICENSED",
+  "main": "./dist/importer.js",
+  "module": "./dist/importer.js",
+  "types": "./dist/main.d.ts",
+  "type": "module"
+}

@@ -1,0 +1,12 @@
+src/
+node_modules/
+demo/
+tsconfig.json
+vite.config.ts
+eslint.config.mjs
+README.md
+package.backup.json
+publish.package.json
+.editorconfig
+.prettierrc
+*.log

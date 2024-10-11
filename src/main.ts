@@ -14,7 +14,7 @@ class RowslintElement extends HTMLElement {
   onImport?: (result: RowslintImportResult) => void;
 }
 
-export const launch = (configWrapper: RowslintConfig) => {
+export const launchRowslint = (configWrapper: RowslintConfig) => {
   if (!configWrapper.apiKey) {
     throw new Error(
       'No API key provided to Rowslint. You may have forgotten to provide a valid API key to finish initializing Rowslint.',

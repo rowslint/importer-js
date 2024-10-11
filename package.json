@@ -3,18 +3,22 @@
   "description": "JavaScript binding for the Rowslint importer",
   "author": "Mouad Ennaciri",
   "license": "UNLICENSED",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
+  "main": "./dist/rowslint.js",
+  "module": "./dist/rowslint.js",
+  "types": "./dist/main.d.ts",
   "files": [
-    "dist/rowslint.js",
-    "dist/models/importer.model.d.ts"
+    "dist"
   ],
   "scripts": {
     "build": "tsc && vite build",
-    "postbuild": "cat dist/rowslint.umd.cjs > dist/rowslint.js && del-cli dist/rowslint.umd.cjs",
+    "postbuild": "cat dist/rowslint.umd.cjs > dist/rowslint.umd.js && del-cli dist/rowslint.umd.cjs",
     "lint": "eslint \"src/**/*.ts\"",
     "format": "prettier . --write",
-    "publish": "npm publish --access=public"
+    "publish": "npm publish --access=public",
+    "prepublishOnly": "cp package.json package.backup.json && cp publish.package.json package.json",
+    "postpublish": "mv package.backup.json package.json"
   },
   "volta": {
     "node": "20.18.0"
@@ -28,6 +32,6 @@
     "tsx": "4.19.1",
     "typescript": "5.6.3",
     "vite": "5.4.8",
-    "vite-plugin-dts": "4.2.3"
+    "vite-plugin-dts": "4.2.4"
   }
 }
