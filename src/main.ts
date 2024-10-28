@@ -10,7 +10,6 @@ class RowslintElement extends HTMLElement {
   apiKey!: string;
   config!: RowslintTemplateConfig;
   file?: File | null;
-  showButton?: boolean;
   onImport?: (result: RowslintImportResult) => void;
 }
 
@@ -25,7 +24,6 @@ export const launchRowslint = (configWrapper: RowslintConfig) => {
   rowslintElement.apiKey = configWrapper.apiKey;
   rowslintElement.config = configWrapper.config;
   rowslintElement.file = configWrapper.file ?? null;
-  rowslintElement.showButton = false;
   rowslintElement.addEventListener('import', function handler(event) {
     const customEvent = event as CustomEvent<RowslintImportResult>;
     configWrapper.onImport?.(customEvent.detail);

@@ -1,8 +1,20 @@
 # @rowslint/importer-js
 
-The Rowslint JavaScript script provides access to the prebuilt importer component. The package interacts directly with the Rowslint APIs using your API key.
+# JavaScript
 
-## Usage
+The Rowslint JavaScript package provides access to the prebuilt widget importer component. The package interacts directly with the Rowslint APIs using your API key.
+
+## Installation
+
+There are 2 ways to use the importer, either using the `@rowslint/importer-js` npm package or directly from the CDN.
+
+### npm package module (recommended)
+
+```
+npm install @rowslint/importer-js
+```
+
+### CDN
 
 Include a script tag with the import statement pointing to the CDN URL where the `@rowslint/importer-js` package is hosted:
 
@@ -10,41 +22,45 @@ Include a script tag with the import statement pointing to the CDN URL where the
 <script src="https://cdn.jsdelivr.net/npm/@rowslint/importer-js@latest/dist/rowslint.js"></script>
 ```
 
-Import TypeScript interfaces from the `@rowslint/importer-js/dist/models/importer.model` path if you are using TypeScript:
+## Usage
 
-```ts
-import { RowslintConfig } from '@rowslint/importer-js/dist/models/importer.model';
-```
+:::info
 
-Call the `launch()` method with the organization API key and the template key parameters to display the importer UI.
+In the following examples we will use the npm package. if you wish to use the CDN script, simply change `launchRowslint({})` by `rowslint.launchRowslint({})`.
 
-```jsx
-<script>
-  const launch = () => {
-    rowslint.launch({
-      // Your organization API key here.
-      apiKey: "ORGANIZATION_API_KEY",
-      config: {
-        // Your template key here.
-        templateKey: "TEMPLATE_KEY"
-      }
-    });
-  }
-</script>
+:::
 
-<button onclick="launch()">Launch</button>
-```
+Call the `launchRowslint()` method with the [organization API key](https://app.rowslint.io/settings/organization) and the template key parameters to display the importer UI.
 
-#### Headless UI
-
-You can also use your custom upload UI and then use Rowslint importer only to format and validate data (this will display the import modal without the first upload step). To do so, call the `launch()` method with the uploaded XLSX or CSV file (in `File` type).
+Get the template key from the "**Settings**" tab in the template edit page.
 
 ```jsx
-rowslint.launch({
+import { launchRowslint } from '@rowslint/importer-js';
+
+const launch = () => {
+  launchRowslint({
+    // Your organization API key here.
+    apiKey: 'ORGANIZATION_API_KEY',
+    config: {
+      // Your template key here.
+      templateKey: 'TEMPLATE_KEY',
+    },
+  });
+};
+
+<button onclick="launch()">Launch</button>;
+```
+
+### Headless UI
+
+You can also use your custom upload UI and then use Rowslint importer SDK only to format and validate data (this will display the import modal without the first upload step). To do so, call the `launchRowslint()` method with the uploaded XLSX or CSV file (in `File` type).
+
+```jsx
+launchRowslint({
   apiKey: 'ORGANIZATION_API_KEY',
   config: {
     templateKey: 'TEMPLATE_KEY',
-    // `inputFile` in `file` type.
+    // `inputFile` in `File` type.
     file: inputFile,
   },
 });
@@ -52,12 +68,15 @@ rowslint.launch({
 
 ### Events
 
-The `launch()` method provide a callback parameter which is triggered on the importer modal closes. You can use it to handle the closing of the importer after the import has been completed.
+The `launchRowslint()` method provide a callback parameter which is triggered on the importer modal closes. You can use it to handle the closing of the importer after the import has been completed.
+
+See an example of the return format [here](#get-data).
 
 ```jsx
-rowslint.launch({
+launchRowslint({
   apiKey: 'ORGANIZATION_API_KEY',
   config: { templateKey: 'TEMPLATE_KEY' },
+  // Callback.
   onImport: (result) => {
     switch (result.status) {
       case 'success':
@@ -76,7 +95,7 @@ rowslint.launch({
 
 ## Parameters
 
-The `launch()` method take one object parameter with 4 properties:
+The `launchRowslint()` method take one object parameter with 4 properties:
 
 | Name     | Type                                     | Required | Description                                                                                                           |
 | -------- | ---------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------- |
@@ -119,30 +138,27 @@ Represents the return of the importer after the modal is closed.
 
 ### Importer UI
 
-This example demonstrates how to use the importer by displaying the importer UI and listening on the event when the import process is complete.
+This example demonstrates how to use the importer by displaying the importer modal and trigger the `onImport` callback when the import process is complete.
 
 ```jsx
-<body>
-  <script src="https://cdn.jsdelivr.net/npm/@rowslint/importer-js@latest/dist/rowslint.js"></script>
-  <script>
-    const launch = () => {
-      rowslint.launch({
-        apiKey: 'ORGANIZATION_API_KEY',
-        config: {
-          templateKey: 'TEMPLATE_KEY',
-          returnType: 'json'
-        },
-        onImport: (result) => {
-          if (result.status === 'success' && result.metadata?.is_valid) {
-            // Continue the import process.
-          }
-        },
-      });
-    };
-  </script>
+import { launchRowslint } from '@rowslint/importer-js';
 
-  <button onclick="launch()">Launch</button>
-</body>
+const launch = () => {
+  launchRowslint({
+    apiKey: 'ORGANIZATION_API_KEY',
+    config: {
+      templateKey: 'TEMPLATE_KEY',
+      returnType: 'json',
+    },
+    onImport: (result) => {
+      if (result.status === 'success' && result.metadata?.is_valid) {
+        // Continue the import process.
+      }
+    },
+  });
+};
+
+<button onclick="launch()">Launch</button>;
 ```
 
 ### Headless importer UI
@@ -150,112 +166,144 @@ This example demonstrates how to use the importer by displaying the importer UI 
 In this example, we will use the importer in the headless mode without the first upload step. To do so, we will use our custom file input field to upload the file, then we will set it to the importer.
 
 ```jsx
-<body>
-  <script src="https://cdn.jsdelivr.net/npm/@rowslint/importer-js@latest/dist/rowslint.js"></script>
-  <script>
-    const launch = () => {
-      const inputFile = document.getElementById('file');
-      rowslint.launch({
-        apiKey: 'ORGANIZATION_API_KEY',
-        config: {
-          templateKey: 'TEMPLATE_KEY',
-          returnType: 'xslx',
-        },
-        file: inputFile.files[0],
-        onImport: (result) => {
-          // Continue the import process.
-        },
-      });
-    };
-  </script>
+import { launchRowslint } from '@rowslint/importer-js';
 
-  <input id="file" type="file" />
-  <button onclick="launch()">Launch</button>
-</body>
+const launch = () => {
+  const inputFile = document.getElementById('file');
+  launchRowslint({
+    apiKey: 'ORGANIZATION_API_KEY',
+    config: {
+      templateKey: 'TEMPLATE_KEY',
+      returnType: 'xslx',
+    },
+    file: inputFile.files[0],
+    onImport: (result) => {
+      // Continue the import process.
+    },
+  });
+};
+
+<input id="file" type="file" />
+<button onclick="launch()">Launch</button>
 ```
 
 ### Custom validations
 
-We can define a custom configuration of validations from the code. Let's say our template has a "firstname" column. In this example, we will customize the validation of this column to accept only values starting with the letter "A".
+We can define a custom configuration of validations from the code. Let's say our template has a "firstname" column. In this example, we will set a custom the validation of this column to accept only values starting with the letter "A".
 
 ```jsx
-<body>
-  <script src="https://cdn.jsdelivr.net/npm/@rowslint/importer-js@latest/dist/rowslint.js"></script>
-  <script>
-    const launch = () => {
-      rowslint.launch({
-        apiKey: 'ORGANIZATION_API_KEY',
-        config: {
-          templateKey: 'TEMPLATE_KEY'
-        },
-        customValidators: {
-          'firstname': (columnValue) => {
-            if (typeof columnValue === 'string' && columnValue.startsWith('A')) {
-              // Return `true` if the value is valid.
-              return true;
-            }
-            // Return custom message if the value is invalid.
-            return {
-              message: 'Must start with the letter "A".',
-            };
-          },
-        },
-        onImport: (result) => {
-          // Continue the import process.
-        },
-      });
-    };
-  </script>
+import { launchRowslint } from '@rowslint/importer-js';
 
-  <button onclick="launch()">Launch</button>
-</body>
+const launch = () => {
+  launchRowslint({
+    apiKey: 'ORGANIZATION_API_KEY',
+    config: {
+      templateKey: 'TEMPLATE_KEY',
+    },
+    customValidators: {
+      firstname: (columnValue) => {
+        if (typeof columnValue === 'string' && columnValue.startsWith('A')) {
+          // Return `true` if the value is valid.
+          return true;
+        }
+        // Return custom message if the value is invalid.
+        return {
+          message: 'Must start with the letter "A".',
+        };
+      },
+    },
+    onImport: (result) => {
+      // Continue the import process.
+    },
+  });
+};
+
+<button onclick="launch()">Launch</button>;
 ```
 
 Note that:
 
 - `firstname` property is the column name and must already be added to the template columns.
-- By defining a column custom validation, this will override the column validation type already defined in the template edition page.
+- By defining a custom column validation, this will override the column validation type already defined in the template edition page.
 
 We can also return a list of valid values to be displayed in a select field.
 
 ```jsx
-<body>
-  <script src="https://cdn.jsdelivr.net/npm/@rowslint/importer-js@latest/dist/rowslint.js"></script>
-  <script>
-    const validValues = ['A', 'B'];
-    const launch = () => {
-      rowslint.launch({
-        apiKey: 'ORGANIZATION_API_KEY',
-        config: {
-          templateKey: 'TEMPLATE_KEY'
-        },
-        customValidators: {
-          'firstname': (columnValue) => {
-            if (typeof columnValue === 'string' && validValues.includes(columnValue)) {
-              // Return `true` if the value is valid.
-              return true;
-            }
-            // Return custom message if the value is invalid.
-            return {
-              message: 'Must be "A" or "B".',
-              validationType: 'choiceList',
-              validationOptions: {
-                list: validValues,
-            },
-          };
-          }
-        },
-        onImport: (result) => {
-          // Continue the import process.
-        },
-      });
-    };
-  </script>
+import { launchRowslint } from '@rowslint/importer-js';
 
-  <button onclick="launch()">Launch</button>
-</body>
+const validValues = ['A', 'B'];
+const launch = () => {
+  launchRowslint({
+    apiKey: 'ORGANIZATION_API_KEY',
+    config: {
+      templateKey: 'TEMPLATE_KEY',
+    },
+    customValidators: {
+      firstname: (columnValue) => {
+        if (typeof columnValue === 'string' && validValues.includes(columnValue)) {
+          // Return `true` if the value is valid.
+          return true;
+        }
+        // Return custom message if the value is invalid.
+        return {
+          message: 'Must be "A" or "B".',
+          validationType: 'choiceList',
+          validationOptions: {
+            list: validValues,
+          },
+        };
+      },
+    },
+    onImport: (result) => {
+      // Continue the import process.
+    },
+  });
+};
+
+<button onclick="launch()">Launch</button>;
 ```
 
-## Documentation
+## Get data
 
-To see the latest documentation, [please click here](https://docs.rowslint.dev)
+The SDK data return type of the `onImport` callback is:
+
+```ts
+export interface RowslintImportResult {
+  status: RowslintImportResultStatus;
+  data?: {
+    file?: File;
+    rows?: Array<Record<string, unknown>>;
+  };
+  metadata?: {
+    is_valid: boolean;
+    file_name: string;
+    sheet_name?: string;
+  };
+}
+
+enum RowslintImportResultStatus {
+  SUCCESS = 'success',
+  ERROR = 'error',
+  CANCELLED = 'cancelled',
+}
+```
+
+Here's an example:
+
+```js
+{
+  status: "success",
+  metadata: {
+    is_valid: true,
+    file_name: "myFile.xlsx",
+    sheet_name: "Sheet1"
+  },
+  rows: [
+    {
+      firstname: "Jean",
+      lastname: "Pierre",
+      email: "jean@pierre.com"
+    }
+  ]
+}
+```
