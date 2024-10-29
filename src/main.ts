@@ -1,6 +1,7 @@
 (() => {
   const script = document.createElement('script');
   script.src = 'https://cdn.jsdelivr.net/npm/@rowslint/importer@latest/browser/rowslint-element.js';
+  script.type = 'module';
   document.head.appendChild(script);
 })();
 

@@ -12,6 +12,7 @@ export default defineConfig({
       formats: ['es', 'umd'],
       fileName: 'rowslint',
     },
+    minify: 'esbuild',
   },
   plugins: [dts()],
 });
