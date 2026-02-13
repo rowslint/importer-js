@@ -3,7 +3,7 @@
   "description": "JavaScript binding for the Rowslint importer",
   "author": "Mouad Ennaciri",
   "license": "UNLICENSED",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "type": "module",
   "main": "./dist/rowslint.js",
   "module": "./dist/rowslint.js",
@@ -20,18 +20,21 @@
     "prepublishOnly": "cp package.json package.backup.json && cp publish.package.json package.json",
     "postpublish": "mv package.backup.json package.json"
   },
-  "volta": {
-    "node": "24.11.1"
-  },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "8.47.0",
-    "@typescript-eslint/parser": "8.47.0",
-    "del-cli": "6.0.0",
-    "eslint": "9.39.1",
-    "prettier": "3.6.2",
-    "tsx": "4.20.6",
+    "@eslint/eslintrc": "3.3.3",
+    "@eslint/js": "10.0.1",
+    "@typescript-eslint/eslint-plugin": "8.55.0",
+    "@typescript-eslint/parser": "8.55.0",
+    "del-cli": "7.0.0",
+    "eslint": "10.0.0",
+    "globals": "17.3.0",
+    "prettier": "3.8.1",
+    "tsx": "4.21.0",
     "typescript": "5.9.3",
-    "vite": "7.2.2",
+    "vite": "7.3.1",
     "vite-plugin-dts": "4.5.4"
+  },
+  "volta": {
+    "node": "24.13.1"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@rowslint/importer-js",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "author": "Mouad Ennaciri",
   "license": "UNLICENSED",
   "main": "./dist/rowslint.js",
