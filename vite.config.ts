@@ -1,7 +1,10 @@
 // vite.config.ts
-import { resolve } from 'path';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/guide/build.html#library-mode
 export default defineConfig({
@@ -12,7 +15,7 @@ export default defineConfig({
       formats: ['es', 'umd'],
       fileName: 'rowslint',
     },
-    minify: 'esbuild',
+    minify: true,
   },
   plugins: [dts()],
 });
